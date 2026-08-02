@@ -473,6 +473,7 @@
                 </div>
 
                 <div id="nickcolor" class="sub-section active">
+                    <!-- содержимое nickcolor -->
                     <div class="field">
                         <label>Ник игрока:</label>
                         <input type="text" id="nc-nick" placeholder="r0bya" maxlength="15" oninput="updateNickcolor()" onpaste="setTimeout(() => { if (this.value.length > 15) this.value = this.value.slice(0, 15); updateNickcolor(); }, 10)" />
@@ -514,6 +515,7 @@
                 </div>
 
                 <div id="item" class="sub-section">
+                    <!-- содержимое item -->
                     <div class="item-layout">
                         <div class="item-left">
                             <div class="field">
@@ -564,6 +566,7 @@
                 </div>
 
                 <div id="prefix" class="sub-section">
+                    <!-- содержимое prefix -->
                     <div class="item-layout">
                         <div class="item-left">
                             <div class="field">
@@ -601,11 +604,29 @@
 
             <!-- ===== РЕСУРСПАК ===== -->
             <div id="files" class="category">
-                <div class="field">
-                    <div class="file-description">Ресурс пак вносит разнообразие в игровой интерфейс, добавляя новые иконки в меню и чате. Кроме того, он изменяет некоторые звуки и включает живые звуки природы, создавая более погружающую атмосферу.</div>
-                    <div class="file-buttons">
-                        <button class="download-btn" onclick="downloadFile('https://github.com/dotaplus/3235/releases/download/rp/VanillaPlus.zip')">VanillaPlus</button>
-                        <button class="download-btn" onclick="downloadFile('https://github.com/dotaplus/3235/releases/download/rp/Vanilla.zip')">Vanilla</button>
+                <div class="sub-tabs">
+                    <button class="sub-tab active" data-sub="r-pack" onclick="switchSubTab('files','r-pack')">r-pack</button>
+                    <button class="sub-tab" data-sub="server-rp" onclick="switchSubTab('files','server-rp')">серверный рп</button>
+                </div>
+
+                <!-- Вкладка r-pack -->
+                <div id="r-pack" class="sub-section active">
+                    <div class="field">
+                        <div class="file-description">Ресурс пак вносит разнообразие в игровой интерфейс, добавляя новые иконки в меню и чате. Кроме того, он изменяет некоторые звуки и включает живые звуки природы, создавая более погружающую атмосферу.</div>
+                        <div class="file-buttons">
+                            <button class="download-btn" onclick="downloadFile('https://github.com/dotaplus/3235/releases/download/rp/VanillaPlus.zip')">VanillaPlus</button>
+                            <button class="download-btn" onclick="downloadFile('https://github.com/dotaplus/3235/releases/download/rp/Vanilla.zip')">Vanilla</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Вкладка серверный рп -->
+                <div id="server-rp" class="sub-section">
+                    <div class="field">
+                        <div class="file-description">Это исправленная версия серверного ресурс пака, на который не ругается содиум.</div>
+                        <div class="file-buttons">
+                            <button class="download-btn" onclick="downloadFile('https://github.com/dotaplus/3235/releases/download/rp/rpvr.zip')">Скачать</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -637,39 +658,48 @@
                 cat.classList.toggle('active', cat.id === category);
             });
 
-            if (category === 'files') {
-                document.querySelector('.card').classList.add('wide');
-                return;
-            }
-
+            // Находим первую подвкладку в категории и переключаемся на неё
             const firstSubTab = document.querySelector(`#${category} .sub-tab`);
             if (firstSubTab) {
                 const sub = firstSubTab.dataset.sub;
                 switchSubTab(category, sub);
             }
-            const isWide = (category === 'tools' && (activeSubTab === 'item' || activeSubTab === 'prefix'));
-            document.querySelector('.card').classList.toggle('wide', isWide);
+
+            // Ширина карточки
+            if (category === 'files') {
+                document.querySelector('.card').classList.add('wide');
+            } else {
+                const isWide = (category === 'tools' && (activeSubTab === 'item' || activeSubTab === 'prefix'));
+                document.querySelector('.card').classList.toggle('wide', isWide);
+            }
         }
 
-        // ===== ПЕРЕКЛЮЧЕНИЕ ПОДВКЛАДОК (только для категории "tools") =====
+        // ===== ПЕРЕКЛЮЧЕНИЕ ПОДВКЛАДОК (для всех категорий) =====
         function switchSubTab(category, sub) {
-            if (category !== 'tools') return;
             if (category !== activeCategory) return;
             activeSubTab = sub;
 
+            // Обновляем активные кнопки подвкладок
             document.querySelectorAll(`#${category} .sub-tab`).forEach(tab => {
                 tab.classList.toggle('active', tab.dataset.sub === sub);
             });
+
+            // Показываем нужную секцию
             document.querySelectorAll(`#${category} .sub-section`).forEach(sec => {
                 sec.classList.toggle('active', sec.id === sub);
             });
 
-            const isWide = (sub === 'item' || sub === 'prefix');
-            document.querySelector('.card').classList.toggle('wide', isWide);
-
-            if (sub === 'nickcolor') updateNickcolor();
-            else if (sub === 'item') updateItem();
-            else if (sub === 'prefix') updatePrefix();
+            // Для категории tools обновляем ширину карточки и вызываем обновление контента
+            if (category === 'tools') {
+                const isWide = (sub === 'item' || sub === 'prefix');
+                document.querySelector('.card').classList.toggle('wide', isWide);
+                if (sub === 'nickcolor') updateNickcolor();
+                else if (sub === 'item') updateItem();
+                else if (sub === 'prefix') updatePrefix();
+            } else if (category === 'files') {
+                // Для файлов всегда широкая карточка, ничего дополнительно не нужно
+                document.querySelector('.card').classList.add('wide');
+            }
         }
 
         // ===== СКАЧИВАНИЕ ФАЙЛОВ =====
