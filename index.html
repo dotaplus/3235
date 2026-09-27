@@ -141,23 +141,24 @@
             border-color: #6aaa32 #6aaa32 #2a4a10 #2a4a10;
         }
 
-        /* ===== Квадратные кнопки количества цветов ===== */
+        /* ===== Кнопки количества цветов — в один ряд ===== */
         .nc-count-tabs {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
             margin-bottom: 12px;
         }
         .nc-count-tab {
-            width: 38px;
-            height: 38px;
+            flex: 1 1 0;
+            min-width: 0;
+            height: 34px;
             padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'MinecraftRus', monospace;
-            font-size: 1rem;
+            font-size: 0.9rem;
             cursor: pointer;
             background: #5a5a5a;
             color: #ccc;
@@ -484,13 +485,14 @@
             .line-selector-group { gap: 6px; }
             .line-arrow-btn { padding: 2px 8px; font-size: 0.8rem; height: 24px; }
             .download-btn { width: 85%; }
-            .nc-count-tab { width: 34px; height: 34px; font-size: 0.9rem; }
+            .nc-count-tabs { gap: 3px; }
+            .nc-count-tab { height: 30px; font-size: 0.8rem; }
         }
     </style>
 </head>
 <body>
     <img src="assets/images/minecraft_title.png" alt="Minecraft" class="title-img" />
-    <div class="card wide">
+    <div class="card">
         <div class="main-tabs">
             <button class="main-tab active" data-category="tools" onclick="switchCategory('tools')">Инструменты</button>
             <button class="main-tab" data-category="files" onclick="switchCategory('files')">Ресурспак</button>
