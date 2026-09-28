@@ -61,6 +61,10 @@
             max-width: 400px;
             width: 100%;
             image-rendering: pixelated;
+            max-height: 300px;
+            opacity: 1;
+            overflow: hidden;
+            transition: max-height 0.45s ease, opacity 0.3s ease, margin 0.45s ease;
         }
 
         .card {
@@ -141,7 +145,6 @@
             border-color: #6aaa32 #6aaa32 #2a4a10 #2a4a10;
         }
 
-        /* ===== Кнопки количества цветов — в один ряд ===== */
         .nc-count-tabs {
             display: flex;
             flex-wrap: nowrap;
@@ -502,8 +505,13 @@
             overflow: hidden;
             padding: 12px 0 0;
         }
+        /* Плавное скрытие картинки-шапки */
         body.skin-mode .title-img {
-            flex-shrink: 0;
+            max-height: 0;
+            opacity: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            pointer-events: none;
         }
         body.skin-mode .card {
             flex: 1;
