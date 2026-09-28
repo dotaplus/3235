@@ -64,7 +64,10 @@
             max-height: 300px;
             opacity: 1;
             overflow: hidden;
-            transition: max-height 0.45s ease, opacity 0.3s ease, margin 0.45s ease;
+            transition:
+                max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                margin 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .card {
@@ -77,7 +80,7 @@
             width: 100%;
             max-width: 420px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
-            transition: max-width 0.2s;
+            transition: max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
         }
         .card.wide {
@@ -102,6 +105,10 @@
             border-right: 3px solid #2a2a2a;
             border-bottom: 3px solid #2a2a2a;
             text-shadow: 1px 1px #000;
+            transition:
+                background 0.25s ease,
+                color 0.25s ease,
+                border-color 0.3s ease;
         }
         .main-tab.active {
             background: #4a7a22;
@@ -114,10 +121,11 @@
         }
         .category {
             display: none;
-            animation: fadeSlide 0.35s ease forwards;
+            opacity: 0;
         }
         .category.active {
             display: block;
+            animation: fadeSlide 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
         .sub-tabs {
@@ -138,6 +146,10 @@
             border-right: 3px solid #2a2a2a;
             border-bottom: 3px solid #2a2a2a;
             text-shadow: 1px 1px #000;
+            transition:
+                background 0.25s ease,
+                color 0.25s ease,
+                border-color 0.3s ease;
         }
         .sub-tab.active {
             background: #4a7a22;
@@ -171,6 +183,17 @@
             border-right: 3px solid #2a2a2a;
             border-bottom: 3px solid #2a2a2a;
             text-shadow: 1px 1px #000;
+            transition:
+                background 0.25s ease,
+                color 0.25s ease,
+                border-color 0.3s ease,
+                transform 0.15s ease;
+        }
+        .nc-count-tab:hover {
+            transform: translateY(-1px);
+        }
+        .nc-count-tab:active {
+            transform: translateY(0);
         }
         .nc-count-tab.active {
             background: #4a7a22;
@@ -184,10 +207,10 @@
         }
         .sub-section.active {
             display: block;
-            animation: fadeSlide 0.35s ease forwards;
+            animation: fadeSlide 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
         @keyframes fadeSlide {
-            from { opacity: 0; transform: translateY(8px); }
+            from { opacity: 0; transform: translateY(12px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
@@ -214,6 +237,10 @@
             font-family: 'MinecraftRus', monospace;
             font-size: 0.95rem;
             outline: none;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+        input[type="text"]:focus, textarea:focus {
+            border-color: #6aaa32 #6aaa32 #1a1a1a #1a1a1a;
         }
         input[type="number"]::-webkit-inner-spin-button,
         input[type="number"]::-webkit-outer-spin-button {
@@ -234,6 +261,10 @@
             cursor: pointer;
             background: #000;
             padding: 2px;
+            transition: border-color 0.2s ease, transform 0.15s ease;
+        }
+        input[type="color"]:hover {
+            transform: scale(1.05);
         }
 
         .preview-label {
@@ -254,6 +285,7 @@
             flex-wrap: wrap;
             align-items: center;
             white-space: pre-wrap;
+            transition: border-color 0.25s ease;
         }
         .command-box {
             background: #1a1a1a;
@@ -266,6 +298,7 @@
             min-height: 28px;
             cursor: text;
             margin-bottom: 10px;
+            transition: border-color 0.25s ease, color 0.25s ease;
         }
         .copy-btn {
             width: 100%;
@@ -277,12 +310,18 @@
             text-shadow: 1px 1px #000;
             border: 4px solid #7a7a7a #7a7a7a #2a2a2a #2a2a2a;
             cursor: pointer;
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                border-color 0.15s ease,
+                transform 0.1s ease;
         }
         .copy-btn:hover {
             background: #6a6a6a;
             color: #FFFF55;
         }
         .copy-btn:active {
+            transform: translateY(1px);
             border-color: #2a2a2a #2a2a2a #7a7a7a #7a7a7a;
         }
         .copy-btn.copied {
@@ -301,12 +340,18 @@
             text-shadow: 1px 1px #000;
             border: 4px solid #7a7a7a #7a7a7a #2a2a2a #2a2a2a;
             cursor: pointer;
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                border-color 0.15s ease,
+                transform 0.1s ease;
         }
         .color-btn:hover {
             background: #6a6a6a;
             color: #FFFF55;
         }
         .color-btn:active {
+            transform: translateY(1px);
             border-color: #2a2a2a #2a2a2a #7a7a7a #7a7a7a;
         }
 
@@ -342,6 +387,10 @@
             color: #ccc;
             border: 3px solid #7a7a7a #7a7a7a #2a2a2a #2a2a2a;
             text-shadow: 1px 1px #000;
+            transition:
+                background 0.25s ease,
+                color 0.25s ease,
+                border-color 0.3s ease;
         }
         .item-cmd-tab.active {
             background: #4a7a22;
@@ -395,13 +444,21 @@
             font-size: 0.8rem;
             cursor: pointer;
             border-radius: 4px;
-            transition: 0.1s;
+            transition:
+                background 0.15s ease,
+                border-color 0.2s ease,
+                color 0.15s ease,
+                transform 0.12s ease;
         }
         .style-btn:hover {
             background: #4a4a4a;
             color: #fff;
+            transform: translateY(-1px);
         }
-        .style-btn:active { border-color: #2a2a2a; }
+        .style-btn:active {
+            border-color: #2a2a2a;
+            transform: translateY(0);
+        }
         .style-btn.active {
             background: #4a7a22;
             border-color: #6aaa32;
@@ -422,19 +479,27 @@
             font-size: 0.9rem;
             cursor: pointer;
             border-radius: 4px;
-            transition: 0.1s;
             line-height: 1.4;
             height: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
             user-select: none;
+            transition:
+                background 0.15s ease,
+                border-color 0.15s ease,
+                color 0.15s ease,
+                transform 0.12s ease;
         }
         .line-arrow-btn:hover {
             background: #4a4a4a;
             color: #fff;
+            transform: translateY(-1px);
         }
-        .line-arrow-btn:active { border-color: #2a2a2a; }
+        .line-arrow-btn:active {
+            border-color: #2a2a2a;
+            transform: translateY(0);
+        }
         .line-display {
             font-family: 'MinecraftRus', monospace;
             font-size: 0.9rem;
@@ -460,17 +525,23 @@
             font-family: 'MinecraftRus', monospace;
             font-size: 0.95rem;
             cursor: pointer;
-            transition: 0.1s;
             width: 70%;
             max-width: 300px;
             text-align: center;
             box-sizing: border-box;
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                border-color 0.15s ease,
+                transform 0.12s ease;
         }
         .download-btn:hover {
             background: #6a6a6a;
             color: #FFFF55;
+            transform: translateY(-1px);
         }
         .download-btn:active {
+            transform: translateY(1px);
             border-color: #2a2a2a #2a2a2a #7a7a7a #7a7a7a;
         }
         .file-description {
@@ -481,21 +552,7 @@
             text-shadow: 1px 1px #000;
         }
 
-        /* ===== SKIN ===== */
-        .skin-hint {
-            font-size: 0.8rem;
-            color: #ccc;
-            line-height: 1.5;
-            margin-bottom: 8px;
-            padding: 8px 12px;
-            background: rgba(85, 255, 85, 0.06);
-            border-left: 4px solid #55FF55;
-            text-shadow: 1px 1px #000;
-            transition: opacity 0.4s, max-height 0.4s, margin 0.4s, padding 0.4s;
-            max-height: 200px;
-            overflow: hidden;
-        }
-
+        /* ===== SKIN: iframe занимает всё оставшееся место ===== */
         .skin-frame-wrap {
             width: 100%;
             height: 600px;
@@ -512,7 +569,6 @@
             background: #fff;
         }
 
-        /* ===== SKIN: iframe занимает всё оставшееся место под шапкой ===== */
         body.skin-mode {
             display: flex;
             flex-direction: column;
@@ -565,9 +621,6 @@
             flex-direction: column;
             min-height: 0;
             margin: 0;
-        }
-        body.skin-mode .skin-hint {
-            flex-shrink: 0;
         }
         body.skin-mode .skin-frame-wrap {
             flex: 1;
@@ -716,9 +769,6 @@
                 <!-- ===== КОНСТРУКТОР СКИНОВ ===== -->
                 <div id="skin" class="sub-section">
                     <div class="field">
-                        <div class="skin-hint">
-                            🌐 Интерфейс редактора на английском. Чтобы перевести на русский — нажмите на иконку перевода в адресной строке браузера или правой кнопкой мыши по странице → «Перевести на русский».
-                        </div>
                         <div class="skin-frame-wrap" id="skin-frame-wrap">
                             <iframe
                                 id="skin-iframe"
@@ -835,10 +885,9 @@
                 else if (sub === 'item') updateItem();
                 else if (sub === 'prefix') updatePrefix();
 
-                // конструктор скинов — включаем режим на всю высоту окна
+                // конструктор скинов — полноэкранный режим
                 if (sub === 'skin') {
                     document.body.classList.add('skin-mode');
-                    showSkinHintOnce();
                 } else {
                     document.body.classList.remove('skin-mode');
                 }
@@ -846,19 +895,6 @@
                 document.body.classList.remove('skin-mode');
                 document.querySelector('.card').classList.add('wide');
             }
-        }
-
-        // ===== КОНСТРУКТОР СКИНОВ =====
-        function showSkinHintOnce() {
-            const hint = document.querySelector('.skin-hint');
-            if (!hint || hint.dataset.shown === '1') return;
-            hint.dataset.shown = '1';
-            setTimeout(() => {
-                hint.style.opacity = '0';
-                hint.style.maxHeight = '0';
-                hint.style.margin = '0';
-                hint.style.padding = '0';
-            }, 6000);
         }
 
         // ===== СКАЧИВАНИЕ ФАЙЛОВ =====
