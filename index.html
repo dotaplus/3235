@@ -647,19 +647,16 @@
                         <div class="file-description">Загрузка скина через официальный сервис SkinsRestorer. Загрузите PNG-файл (64×64 или 64×32, до 3 МБ) и получите команду <b>/skin url ...</b> для применения в игре.</div>
                         <div class="skin-frame-wrap">
                             <iframe
-                                id="skin-iframe"
-                                src="about:blank"
-                                data-src="/api/proxy?url=https://skinsrestorer.net/upload"
-                                width="100%"
-                                height="600px"
+                                src="https://skinsrestorer.net/upload"
                                 title="SkinsRestorer Upload"
                                 loading="lazy"
                                 referrerpolicy="no-referrer"
                                 allow="clipboard-write"
+                                sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
                             ></iframe>
                         </div>
                         <div class="skin-note">
-                            Если окно не загрузилось — откройте страницу напрямую:
+                            Если окно не загрузилось — сайт может запрещать встраивание. Откройте страницу напрямую:
                         </div>
                         <div class="file-buttons" style="margin-top:6px;">
                             <button class="download-btn" onclick="openSkinUpload()">Открыть skinsrestorer.net/upload</button>
@@ -765,22 +762,10 @@
                 if (sub === 'nickcolor') updateNickcolor();
                 else if (sub === 'item') updateItem();
                 else if (sub === 'prefix') updatePrefix();
-                else if (sub === 'skin') ensureSkinIframeLoaded();
+                // skin — ничего дополнительно пересчитывать не нужно
             } else if (category === 'files') {
                 document.querySelector('.card').classList.add('wide');
             }
-        }
-
-        // ===== SKIN =====
-        function ensureSkinIframeLoaded() {
-            const iframe = document.getElementById('skin-iframe');
-            if (!iframe || iframe.dataset.loaded === '1') return;
-            const target = iframe.dataset.src || '/api/proxy?url=https://skinsrestorer.net/upload';
-            iframe.src = target;
-            iframe.dataset.loaded = '1';
-        }
-        function openSkinUpload() {
-            window.open('https://skinsrestorer.net/upload', '_blank', 'noopener,noreferrer');
         }
 
         // ===== СКАЧИВАНИЕ ФАЙЛОВ =====
@@ -791,6 +776,11 @@
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
+        }
+
+        // ===== SKIN =====
+        function openSkinUpload() {
+            window.open('https://skinsrestorer.net/upload', '_blank', 'noopener,noreferrer');
         }
 
         // ===== ВСПОМОГАТЕЛЬНЫЕ =====
