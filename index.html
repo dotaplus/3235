@@ -129,7 +129,7 @@
             flex: 1;
             padding: 8px 6px;
             font-family: 'MinecraftRus', monospace;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             background: #5a5a5a;
             color: #ccc;
@@ -145,6 +145,7 @@
             border-color: #6aaa32 #6aaa32 #2a4a10 #2a4a10;
         }
 
+        /* ===== Кнопки количества цветов — в один ряд ===== */
         .nc-count-tabs {
             display: flex;
             flex-wrap: nowrap;
@@ -481,6 +482,20 @@
         }
 
         /* ===== SKIN ===== */
+        .skin-hint {
+            font-size: 0.8rem;
+            color: #ccc;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            padding: 8px 12px;
+            background: rgba(85, 255, 85, 0.06);
+            border-left: 4px solid #55FF55;
+            text-shadow: 1px 1px #000;
+            transition: opacity 0.4s, max-height 0.4s, margin 0.4s, padding 0.4s;
+            max-height: 200px;
+            overflow: hidden;
+        }
+
         .skin-frame-wrap {
             width: 100%;
             height: 600px;
@@ -505,7 +520,6 @@
             overflow: hidden;
             padding: 12px 0 0;
         }
-        /* Плавное скрытие картинки-шапки */
         body.skin-mode .title-img {
             max-height: 0;
             opacity: 0;
@@ -552,6 +566,9 @@
             min-height: 0;
             margin: 0;
         }
+        body.skin-mode .skin-hint {
+            flex-shrink: 0;
+        }
         body.skin-mode .skin-frame-wrap {
             flex: 1;
             height: auto;
@@ -588,7 +605,7 @@
                     <button class="sub-tab active" data-sub="nickcolor" onclick="switchSubTab('tools','nickcolor')">nickcolor</button>
                     <button class="sub-tab" data-sub="item" onclick="switchSubTab('tools','item')">item</button>
                     <button class="sub-tab" data-sub="prefix" onclick="switchSubTab('tools','prefix')">префикс</button>
-                    <button class="sub-tab" data-sub="skin" onclick="switchSubTab('tools','skin')">skin</button>
+                    <button class="sub-tab" data-sub="skin" onclick="switchSubTab('tools','skin')">конструктор скинов</button>
                 </div>
 
                 <div id="nickcolor" class="sub-section active">
@@ -696,9 +713,12 @@
                     </div>
                 </div>
 
-                <!-- ===== SKIN ===== -->
+                <!-- ===== КОНСТРУКТОР СКИНОВ ===== -->
                 <div id="skin" class="sub-section">
                     <div class="field">
+                        <div class="skin-hint">
+                            🌐 Интерфейс редактора на английском. Чтобы перевести на русский — нажмите на иконку перевода в адресной строке браузера или правой кнопкой мыши по странице → «Перевести на русский».
+                        </div>
                         <div class="skin-frame-wrap" id="skin-frame-wrap">
                             <iframe
                                 id="skin-iframe"
@@ -709,6 +729,8 @@
                                 loading="lazy"
                                 referrerpolicy="no-referrer"
                                 allow="clipboard-write"
+                                lang="en"
+                                translate="yes"
                             ></iframe>
                         </div>
                     </div>
@@ -813,12 +835,30 @@
                 else if (sub === 'item') updateItem();
                 else if (sub === 'prefix') updatePrefix();
 
-                // skin — включаем режим на всю высоту окна
-                document.body.classList.toggle('skin-mode', sub === 'skin');
+                // конструктор скинов — включаем режим на всю высоту окна
+                if (sub === 'skin') {
+                    document.body.classList.add('skin-mode');
+                    showSkinHintOnce();
+                } else {
+                    document.body.classList.remove('skin-mode');
+                }
             } else if (category === 'files') {
                 document.body.classList.remove('skin-mode');
                 document.querySelector('.card').classList.add('wide');
             }
+        }
+
+        // ===== КОНСТРУКТОР СКИНОВ =====
+        function showSkinHintOnce() {
+            const hint = document.querySelector('.skin-hint');
+            if (!hint || hint.dataset.shown === '1') return;
+            hint.dataset.shown = '1';
+            setTimeout(() => {
+                hint.style.opacity = '0';
+                hint.style.maxHeight = '0';
+                hint.style.margin = '0';
+                hint.style.padding = '0';
+            }, 6000);
         }
 
         // ===== СКАЧИВАНИЕ ФАЙЛОВ =====
