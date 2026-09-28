@@ -545,7 +545,6 @@
             text-shadow: 1px 1px #000;
         }
 
-        /* ===== SKIN ===== */
         .skin-frame-wrap {
             width: 100%;
             height: 600px;
@@ -622,7 +621,6 @@
             border: 0;
         }
 
-        /* ===== УВЕДОМЛЕНИЕ В СТИЛЕ ДОСТИЖЕНИЯ MINECRAFT ===== */
         .mc-achievement-toast {
             position: fixed;
             top: 20px;
@@ -635,7 +633,7 @@
             border: 3px solid #ffd700;
             border-radius: 2px;
             padding: 10px 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.8), inset 0 0 12px rgba(255, 215, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8);
             font-family: 'MinecraftRus', monospace;
             color: #fff;
             text-shadow: 1px 1px #000;
@@ -651,7 +649,6 @@
             transform: translateX(0);
             pointer-events: auto;
         }
-
         .mc-achievement-toast .mc-toast-icon {
             width: 48px;
             height: 48px;
@@ -671,7 +668,6 @@
         .mc-achievement-toast .mc-toast-icon:hover {
             transform: scale(1.15);
         }
-
         .mc-achievement-toast .mc-toast-content {
             display: flex;
             flex-direction: column;
@@ -687,13 +683,6 @@
             font-size: 0.72rem;
             color: #ddd;
             line-height: 1.4;
-        }
-        .mc-achievement-toast .mc-toast-desc a {
-            color: #55FF55;
-            text-decoration: underline;
-        }
-        .mc-achievement-toast .mc-toast-desc a:hover {
-            color: #FFFF55;
         }
 
         @media (max-width: 820px) {
@@ -720,7 +709,6 @@
         </div>
 
         <div class="category-container">
-            <!-- ===== ИНСТРУМЕНТЫ ===== -->
             <div id="tools" class="category active">
                 <div class="sub-tabs">
                     <button class="sub-tab active" data-sub="nickcolor" onclick="switchSubTab('tools','nickcolor')">nickcolor</button>
@@ -834,7 +822,6 @@
                     </div>
                 </div>
 
-                <!-- ===== КОНСТРУКТОР СКИНОВ ===== -->
                 <div id="skin" class="sub-section">
                     <div class="field">
                         <div class="skin-frame-wrap" id="skin-frame-wrap">
@@ -855,7 +842,6 @@
                 </div>
             </div>
 
-            <!-- ===== РЕСУРСПАК ===== -->
             <div id="files" class="category">
                 <div class="sub-tabs">
                     <button class="sub-tab active" data-sub="r-pack" onclick="switchSubTab('files','r-pack')">r-pack</button>
@@ -884,7 +870,6 @@
         </div>
     </div>
 
-    <!-- ===== УВЕДОМЛЕНИЕ В СТИЛЕ ДОСТИЖЕНИЯ ===== -->
     <div id="mc-achievement-toast" class="mc-achievement-toast">
         <a href="https://starlightskins.lunareclipse.studio/apps/skin-creator"
            target="_blank" rel="noopener noreferrer"
@@ -901,12 +886,10 @@
         </div>
     </div>
 
-    <!-- ===== ЗВУКИ ===== -->
     <audio id="click-sound" src="assets/Click_stereo.ogg" preload="auto"></audio>
     <audio id="toast-sound" src="assets/Out.ogg.mp3" preload="auto"></audio>
 
     <script>
-        // ===== СОСТОЯНИЕ =====
         let activeCategory = 'tools';
         let activeSubTab = 'nickcolor';
         const lastValid = {};
@@ -928,7 +911,6 @@
         let prefixColors = ['#55FF55'];
         let prefixStyles = { bold: false, italic: false, underline: false, strikethrough: false };
 
-        // ===== ЗВУКИ =====
         const clickAudio = document.getElementById('click-sound');
         const toastAudio = document.getElementById('toast-sound');
 
@@ -937,7 +919,7 @@
                 clickAudio.currentTime = 0;
                 clickAudio.volume = 0.6;
                 clickAudio.play().catch(() => {});
-            } catch (e) { /* игнорируем */ }
+            } catch (e) {}
         }
 
         function playToastOutSound() {
@@ -945,7 +927,7 @@
                 toastAudio.currentTime = 0;
                 toastAudio.volume = 0.7;
                 toastAudio.play().catch(() => {});
-            } catch (e) { /* игнорируем */ }
+            } catch (e) {}
         }
 
         document.addEventListener('click', function(e) {
@@ -953,9 +935,9 @@
             if (btn) playClickSound();
         });
 
-        // ===== УВЕДОМЛЕНИЕ В СТИЛЕ ДОСТИЖЕНИЯ =====
         let mcToastTimer = null;
         function showAchievementToast() {
+            if (localStorage.getItem('mc_achievement_shown') === '1') return;
             const toast = document.getElementById('mc-achievement-toast');
             if (!toast) return;
             playToastOutSound();
@@ -965,9 +947,9 @@
                 toast.classList.remove('show');
                 mcToastTimer = null;
             }, 5000);
+            localStorage.setItem('mc_achievement_shown', '1');
         }
 
-        // ===== ПЕРЕКЛЮЧЕНИЕ КАТЕГОРИЙ =====
         function switchCategory(category) {
             activeCategory = category;
             document.querySelectorAll('.main-tab').forEach(tab => {
@@ -992,7 +974,6 @@
             }
         }
 
-        // ===== ПЕРЕКЛЮЧЕНИЕ ПОДВКЛАДОК =====
         function switchSubTab(category, sub) {
             if (category !== activeCategory) return;
             activeSubTab = sub;
@@ -1025,7 +1006,6 @@
             }
         }
 
-        // ===== СКАЧИВАНИЕ ФАЙЛОВ =====
         function downloadFile(path, filename) {
             const a = document.createElement('a');
             a.href = path;
@@ -1035,7 +1015,6 @@
             document.body.removeChild(a);
         }
 
-        // ===== ВСПОМОГАТЕЛЬНЫЕ =====
         function isValidHex(val) { return /^#[0-9A-Fa-f]{6}$/.test(val); }
         function normalizeHex(raw) {
             let val = raw.trim().toUpperCase().replace(/[^0-9A-F#]/g, '');
@@ -1081,7 +1060,6 @@
             el.style.color = '';
         }
 
-        // ===== NICKCOLOR =====
         function buildNcCountButtons() {
             const container = document.getElementById('nc-count-tabs');
             container.innerHTML = '';
@@ -1191,7 +1169,6 @@
             }
         }
 
-        // ===== ITEM =====
         function renderItemColors() {
             const list = document.getElementById('item-colors-list');
             list.innerHTML = '';
@@ -1277,7 +1254,6 @@
             updateItem();
         }
 
-        // ===== ГЕНЕРАЦИЯ =====
         function buildColoredString(text, colors, styles) {
             if (!text) return '';
             const validColors = colors.filter(c => isValidHex(c));
@@ -1364,7 +1340,6 @@
             }
         }
 
-        // ===== PREFIX =====
         function renderPrefixColors() {
             const list = document.getElementById('prefix-colors-list');
             list.innerHTML = '';
@@ -1460,7 +1435,6 @@
             }
         }
 
-        // ===== КОПИРОВАНИЕ =====
         function copy(cmdId, btnId) {
             const text = document.getElementById(cmdId).textContent;
             if (!text) return;
@@ -1485,7 +1459,6 @@
             });
         }
 
-        // ===== ИНИЦИАЛИЗАЦИЯ =====
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.style-btn').forEach(btn => btn.classList.remove('active'));
 
