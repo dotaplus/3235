@@ -937,7 +937,7 @@
 
         let mcToastTimer = null;
         function showAchievementToast() {
-            if (localStorage.getItem('mc_achievement_shown') === '1') return;
+            if (sessionStorage.getItem('mc_achievement_shown') === '1') return;
             const toast = document.getElementById('mc-achievement-toast');
             if (!toast) return;
             playToastOutSound();
@@ -947,7 +947,7 @@
                 toast.classList.remove('show');
                 mcToastTimer = null;
             }, 5000);
-            localStorage.setItem('mc_achievement_shown', '1');
+            sessionStorage.setItem('mc_achievement_shown', '1');
         }
 
         function switchCategory(category) {
