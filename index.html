@@ -644,22 +644,24 @@
                 <!-- ===== SKIN ===== -->
                 <div id="skin" class="sub-section">
                     <div class="field">
-                        <div class="file-description">Загрузка скина через официальный сервис SkinsRestorer. Загрузите PNG-файл (64×64 или 64×32, до 3 МБ) и получите команду <b>/skin url ...</b> для применения в игре.</div>
+                        <div class="file-description">Создание и редактирование скинов через Starlight Skin Creator. Настройте модель, цвета и детали, затем скопируйте код скина и примените его на сервере.</div>
                         <div class="skin-frame-wrap">
                             <iframe
-                                src="https://skinsrestorer.net/upload"
-                                title="SkinsRestorer Upload"
+                                id="skin-iframe"
+                                src="https://starlightskins.lunareclipse.studio/apps/skin-creator"
+                                width="100%"
+                                height="600px"
+                                title="Starlight Skin Creator"
                                 loading="lazy"
                                 referrerpolicy="no-referrer"
                                 allow="clipboard-write"
-                                sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
                             ></iframe>
                         </div>
                         <div class="skin-note">
                             Если окно не загрузилось — сайт может запрещать встраивание. Откройте страницу напрямую:
                         </div>
                         <div class="file-buttons" style="margin-top:6px;">
-                            <button class="download-btn" onclick="openSkinUpload()">Открыть skinsrestorer.net/upload</button>
+                            <button class="download-btn" onclick="openSkinCreator()">Открыть Starlight Skin Creator</button>
                         </div>
                     </div>
                 </div>
@@ -762,10 +764,15 @@
                 if (sub === 'nickcolor') updateNickcolor();
                 else if (sub === 'item') updateItem();
                 else if (sub === 'prefix') updatePrefix();
-                // skin — ничего дополнительно пересчитывать не нужно
+                // skin — iframe уже грузится сам, ничего дополнительно не делаем
             } else if (category === 'files') {
                 document.querySelector('.card').classList.add('wide');
             }
+        }
+
+        // ===== SKIN =====
+        function openSkinCreator() {
+            window.open('https://starlightskins.lunareclipse.studio/apps/skin-creator', '_blank', 'noopener,noreferrer');
         }
 
         // ===== СКАЧИВАНИЕ ФАЙЛОВ =====
@@ -776,11 +783,6 @@
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-        }
-
-        // ===== SKIN =====
-        function openSkinUpload() {
-            window.open('https://skinsrestorer.net/upload', '_blank', 'noopener,noreferrer');
         }
 
         // ===== ВСПОМОГАТЕЛЬНЫЕ =====
